@@ -268,7 +268,7 @@
     <article class="article-body">
 
       <p class="lead">
-        Look up any stock by ticker symbol. Get the latest price, a 30-day chart, and an AI-generated one-line market sentiment.
+        Look up any stock by ticker symbol. Get the latest price, a 30-day chart.
       </p>
 
       <!-- ── TRACKER WIDGET ── -->
@@ -335,12 +335,12 @@
             <canvas id="priceChart"></canvas>
           </div>
 
-          <!-- AI Sentiment -->
+          <!-- AI Sentiment 
           <div class="sentiment-box">
             <span class="sentiment-label">AI view</span>
             <span class="sentiment-text loading" id="sentimentText">Fetching sentiment…</span>
           </div>
-
+          -->
         </div><!-- /ticker-data -->
       </div><!-- /tracker-wrap -->
 
@@ -374,7 +374,7 @@
   // ================================================================
   //  CONFIGURATION — replace these two values
   // ================================================================
-  const ANTHROPIC_KEY = "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";
+  const ANTHROPIC_KEY = "";
 
   // ================================================================
   //  We use Yahoo Finance via allorigins.win (a free CORS proxy)
@@ -511,7 +511,7 @@
     sentimentEl.textContent = "Fetching AI sentiment…";
     sentimentEl.className = "sentiment-text loading";
 
-    if (!ANTHROPIC_KEY || ANTHROPIC_KEY === "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") {
+    if (!ANTHROPIC_KEY || ANTHROPIC_KEY === "") {
       sentimentEl.textContent = "Add your Anthropic API key in the script to enable AI sentiment.";
       sentimentEl.className = "sentiment-text";
       return;

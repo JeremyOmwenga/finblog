@@ -511,7 +511,7 @@
     sentimentEl.textContent = "Fetching AI sentiment…";
     sentimentEl.className = "sentiment-text loading";
 
-    if (!ANTHROPIC_KEY || ANTHROPIC_KEY === "your-anthropic-api-key-here") {
+    if (!ANTHROPIC_KEY || ANTHROPIC_KEY === "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") {
       sentimentEl.textContent = "Add your Anthropic API key in the script to enable AI sentiment.";
       sentimentEl.className = "sentiment-text";
       return;

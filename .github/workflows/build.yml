@@ -1,0 +1,35 @@
+name: Build & Deploy Articles
+
+on:
+  push:
+    paths:
+      - 'articles/**.md'   # only triggers when you push a .md file
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      # needed so the action can commit back
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install markdown beautifulsoup4
+
+      - name: Run build script
+        run: python scripts/build.py
+
+      - name: Commit & push generated files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Auto: publish new article"
+          git push

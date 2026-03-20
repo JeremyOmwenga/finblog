@@ -1,0 +1,70 @@
+# =============================================================================
+# .github/workflows/build.yml
+# =============================================================================
+#
+# WHAT THIS DOES
+# --------------
+# This GitHub Action runs automatically every time you push a .md file
+# to the articles/ folder. It:
+#   1. Checks out your repo
+#   2. Installs Python dependencies
+#   3. Runs scripts/build.py to generate HTML and update index.html
+#   4. Commits and pushes the generated files back to your repo
+#   5. GitHub Pages then serves the updated site automatically
+#
+# HOW TO SET IT UP
+# ----------------
+# 1. In your repo on GitHub, go to Settings → Pages
+# 2. Set Source to "Deploy from a branch"
+# 3. Set Branch to "main" and folder to "/ (root)"
+# 4. Save — your site will be at https://yourusername.github.io/your-repo/
+#
+# That's it. After that, just push a new .md file to articles/ and
+# the site updates itself within about 60 seconds.
+#
+# =============================================================================
+
+name: Build Articles
+
+on:
+  push:
+    paths:
+      - 'articles/**.md'    # only triggers when a .md file is pushed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Give the action permission to write back to the repo
+    permissions:
+      contents: write
+
+    steps:
+      # Step 1: Check out the full repo contents
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3: Install the two required Python packages
+      - name: Install dependencies
+        run: pip install markdown beautifulsoup4
+
+      # Step 4: Run the build script from the repo root
+      - name: Build articles
+        run: python scripts/build.py
+
+      # Step 5: Commit any newly generated files back to the repo.
+      # The "git diff --staged --quiet || git commit" line means:
+      # "only commit if there are actual changes" — prevents empty commits.
+      - name: Commit and push generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Auto-build: $(date +'%Y-%m-%d %H:%M')"
+          git push

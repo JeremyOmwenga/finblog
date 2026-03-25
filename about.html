@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — OJ Market Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    .about-hero {
+      padding: 3rem 0 2.5rem;
+      border-bottom: 1px solid var(--paper-warm);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+
+    .about-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 2.9rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 1rem 0 1.5rem;
+    }
+
+    .about-standfirst {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      line-height: 1.75;
+      color: var(--ink-light);
+      max-width: 580px;
+    }
+
+    .about-body {
+      padding: 2.5rem 0 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.25s ease forwards;
+    }
+
+    .about-body p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+    }
+
+    .about-body h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 2.75rem 0 0.9rem;
+    }
+
+    .about-body blockquote {
+      margin: 2rem 0;
+      padding: 1.25rem 1.5rem;
+      border-left: 3px solid var(--accent);
+      background-color: var(--accent-pale);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .about-body blockquote p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      margin-bottom: 0;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      margin: 2rem 0 2.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0 1.5rem;
+      position: relative;
+      padding-bottom: 1.75rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 72px;
+      top: 10px;
+      bottom: 0;
+      width: 1px;
+      background: var(--paper-warm);
+      transform: translateX(calc(-50% + 10px));
+    }
+
+    .timeline-item:last-child::before { display: none; }
+
+    .timeline-year {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-align: right;
+      padding-top: 0.15rem;
+    }
+
+    .timeline-content {
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      left: -0.4rem;
+      top: 0.45rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--paper);
+      outline: 1px solid var(--accent);
+    }
+
+    .timeline-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Emphasis box ── */
+    .emphasis-box {
+      margin: 2rem 0 2.5rem;
+      padding: 1.75rem 2rem;
+      border: 1px solid var(--paper-warm);
+      border-top: 3px solid var(--accent);
+      background: white;
+      border-radius: 0 0 4px 4px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+
+    .emphasis-box-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+    }
+
+    .emphasis-box p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+    }
+
+    .emphasis-box p:last-child { margin-bottom: 0; }
+
+    .emphasis-box strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ── Contact strip ── */
+    .contact-strip {
+      padding: 2rem 0 3.5rem;
+      border-top: 1px solid var(--paper-warm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s ease forwards;
+    }
+
+    .contact-strip p {
+      font-size: 0.88rem;
+      color: var(--ink-light);
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid var(--paper-warm);
+      border-radius: 3px;
+      background: white;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-pale);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="site-brand">
+        <span class="site-label">est. 2026</span>
+        <a href="index.html" style="text-decoration:none;">
+          <h1 class="site-title">Financial &amp; Tech Updates and Anecdotes</h1>
+        </a>
+      </div>
+      <nav class="site-nav">
+        <br>
+        <a href="about.html" style="color: var(--accent);">About</a>
+      </nav>
+    </div>
+    <div class="header-rule"></div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <section class="about-hero">
+      <span class="card-tag">About this site</span>
+      <h1 class="about-title">A public record of<br>learning in progress.</h1>
+      <p class="about-standfirst">
+        Started in 2026 as a personal log of a career moving from financial analysis
+        into quantitative methods and tax policy — with a persistent side interest
+        in what African institutions could learn from the rest of the world.
+      </p>
+    </section>
+
+    <div class="about-body">
+
+      <h2>Why this exists</h2>
+
+      <p>
+        This site was not built to be a publication. It was built to be a record — of ideas
+        encountered, positions formed and revised, and the slow accumulation of understanding
+        that a career in finance demands if you take it seriously. Writing forces clarity.
+        Publishing raises the stakes just enough to be useful.
+      </p>
+
+      <p>
+        The working title, <em>OJ Market Monitor</em>, reflects the original impulse: to track
+        markets, understand price formation, and document what the numbers say about the economies
+        that produce them. That scope has widened. Tax policy, quantitative methods, and the
+        institutional architecture of financial systems in Sub-Saharan Africa have become equally
+        central concerns.
+      </p>
+
+      <h2>The progression</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-year">2026</span>
+          <div class="timeline-content">
+            <p class="timeline-label">Financial analysis &amp; markets</p>
+            <p class="timeline-desc">Equity research, price formation, macro reads. Learning to distinguish signal from noise in emerging market data.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">→</span>
+          <div class="timeline-content">
+            <p class="timeline-label">Quantitative methods</p>
+            <p class="timeline-desc">Probabilistic modelling, statistical inference, and the limits of averages as descriptive tools. Building toward systematic, data-driven approaches to market analysis.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">→</span>
+          <div class="timeline-content">
+            <p class="timeline-label">Tax policy &amp; fiscal architecture</p>
+            <p class="timeline-desc">How governments in Sub-Saharan Africa structure revenue, where policy design lags best practice, and what better design could unlock for domestic capital formation and SME growth.</p>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        These are not separate tracks. They converge on a question that feels increasingly
+        urgent: why do African financial systems consistently underprice and underserve the
+        productive economy — and what would it take to change that?
+      </p>
+
+      <h2>The institutional gap</h2>
+
+      <p>
+        Sub-Saharan Africa has the fastest-growing SME sector in the world by headcount.
+        It also has some of the most expensive and least accessible credit on the planet.
+        The gap between those two facts is not a straightforward market failure — it is a
+        design failure. The institutions, instruments, and incentive structures that would
+        connect patient capital to productive small enterprises simply do not exist at
+        meaningful scale.
+      </p>
+
+      <p>
+        They exist elsewhere. The western financial system, for all its well-documented
+        excesses, has spent decades building infrastructure for exactly this problem.
+        Community development financial institutions in the United States. Regional guarantee
+        schemes underpinning Germany's Mittelstand ecosystem. Revenue-based financing
+        structures that align lender and borrower incentives without demanding collateral
+        that most small businesses do not own. The SBA loan guarantee model alone — imperfect
+        as it is — has channelled hundreds of billions into enterprises that conventional
+        banks would not touch. The UK's British Business Bank operates on similar logic.
+        So does the European Investment Fund's SME guarantee window.
+      </p>
+
+      <p>
+        None of this is a case for wholesale importation of western financial architecture.
+        Context matters deeply. Informal economies, thin credit bureau coverage, and the
+        structural dominance of agriculture and trade in SSA's SME sector all require
+        adaptation, not copy-paste. But adaptation requires first understanding what you
+        are adapting from — and that understanding remains patchy among the institutions
+        that need it most.
+      </p>
+
+      <blockquote>
+        <p>
+          The question is not whether African institutions can afford to adopt better credit
+          models. It is whether they can afford not to, given what the current model costs
+          the productive economy every year it persists.
+        </p>
+      </blockquote>
+
+    </div>
+
+    <!-- EMPHASIS BOX -->
+    <div class="emphasis-box">
+      <p class="emphasis-box-label">A specific concern</p>
+      <p>
+        <strong>Predatory credit financing is the most corrosive feature of the current
+        landscape.</strong> Interest rates of 25–40% on short-term SME loans — common across
+        Kenya, Nigeria, Ghana, and Tanzania — do not finance growth. They finance survival at
+        best, and debt traps at worst. The small trader borrowing at 35% annual interest to
+        stock inventory is not building a business. She is subsidising a bank's return on
+        equity with her own labour and risk.
+      </p>
+      <p>
+        The mechanisms that constrain predatory lending in more developed markets — regulatory
+        rate structures, alternative lender competition, credit union infrastructure,
+        government-backed guarantee schemes — are either absent or too weak to matter across
+        most of Sub-Saharan Africa. Building them is slow, unglamorous policy work. It is also
+        among the highest-return investments any of these governments could make in their own
+        productive capacity.
+      </p>
+      <p>
+        This site will document, argue about, and occasionally celebrate progress on that front —
+        alongside markets, data, and everything else that seems worth writing down.
+      </p>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-strip">
+      <p>Written by Jeremy Angwenyi. Corrections and disagreements welcome.</p>
+      <a href="mailto:jeremyangwenyi.ja@gmail.com" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Get in touch
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-title">OJ Market Monitor</span>
+        <span class="footer-copy">© 2026. All rights reserved to Jeremy.</span>
+      </div>
+      <div class="footer-socials">
+        <span class="socials-label">Find me on</span>
+        <div class="social-links">
+          <a href="mailto:jeremyangwenyi.ja@gmail.com" class="social-link" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
